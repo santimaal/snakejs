@@ -94,11 +94,32 @@ function moveOutcome() {
 // Move the snake
 function moveSnake(squares) {
     let tail = currentSnake.pop()
+    squares[currentSnake[0]].classList.remove('head');
+    squares[currentSnake[0]].classList.remove('head_down');
+    squares[currentSnake[0]].classList.remove('head_up');
+    squares[currentSnake[0]].classList.remove('head_left');
+    squares[currentSnake[0]].classList.remove('head_right');
     squares[tail].classList.remove("snake")
     currentSnake.unshift(currentSnake[0] + direction)
     // movement ends here  
     eatFruit(squares, tail)
-    squares[currentSnake[0]].classList.add("snake")
+    console.log(baddir)
+    squares[currentSnake[1]].classList.add("snake")
+    if (baddir == 'ArrowUp') {
+        squares[currentSnake[0]].classList.add("head_down")
+        squares[currentSnake[0]].classList.add('head');
+    } else if(baddir == 'ArrowDown') {
+        squares[currentSnake[0]].classList.add("head_up")
+        squares[currentSnake[0]].classList.add('head');
+    }
+    else if(baddir == 'ArrowLeft') {
+        squares[currentSnake[0]].classList.add("head_right")
+        squares[currentSnake[0]].classList.add('head');
+    }
+    else if(baddir == 'ArrowRight') {
+        squares[currentSnake[0]].classList.add("head_left")
+        squares[currentSnake[0]].classList.add('head');
+    }
 }
 
 // Check if the snake hit himself or hit the border of the board
@@ -125,7 +146,7 @@ function checkForHits(squares) {
 // When the snake eats a fruit
 function eatFruit(squares, tail) {
     if (squares[currentSnake[0]].classList.contains("fruit")) {
-        squares[fruitIndex].style.backgroundImage = "none";
+        squares[fruitIndex].style.backgroundImage = "";
         squares[currentSnake[0]].classList.remove("fruit")
         squares[tail].classList.add("snake")
         currentSnake.push(tail)
@@ -142,7 +163,7 @@ function eatFruit(squares, tail) {
 function randomFruit(squares) {
     do {
         fruitIndex = Math.floor(Math.random() * squares.length)
-    } while (squares[fruitIndex].classList.contains("snake"))
+    } while (squares[fruitIndex].classList.contains("snake")  || squares[fruitIndex].classList.contains("head"))
     squares[fruitIndex].style.backgroundImage = "url(fruits/" + fruits[Math.floor(Math.random() * fruits.length)] + ")";
     squares[fruitIndex].classList.add("fruit")
 }

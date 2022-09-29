@@ -23,13 +23,25 @@
 }
 
 .snake {
-  background: blue;
-  border-radius: 4px;
+  /* background: #438a24; */
+  background-image: url(others/snake.png);
+  border-radius: 9px;
 }
 
-.head {
-  background-color: red;
-  border-radius: 4px;
+.head_down {
+  background-image: url(others/snakehead_down.png);
+}
+
+.head_up {
+  background-image: url(others/snakehead_up.png);
+}
+
+.head_left {
+  background-image: url(others/snakehead_left.png);
+}
+
+.head_right {
+  background-image: url(others/snakehead_right.png);
 }
 
 .scoreDisplay {
