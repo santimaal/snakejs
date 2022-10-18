@@ -3,8 +3,11 @@ var router = require("express").Router();
 var mongoose = require('mongoose');
 const snake = require("../controllers/snake.controller");
 
-// Create a new snake
+// Register a new snake
 router.get("/:username/:pass/register", snake.register);
+
+// Login a new snake
+router.get("/:username/:pass/login", snake.login);
 
 // Retrieve all snake
 router.get("/", snake.findAll);

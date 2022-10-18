@@ -6,7 +6,6 @@ exports.findAll = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
-console.log("hola");
     const confirm_user = database.find(user => {
         return user.username == req.params.username
     });
@@ -14,6 +13,17 @@ console.log("hola");
         db_users.push({ username: req.params.username, pass: req.params.pass });
         res.json(req.params.username);
     } else {
-        res.json("User exists")
+        res.json("Error")
+    }
+}
+
+exports.login = async (req, res) => {
+    const confirm_user = database.find(user => {
+        return user.username == req.params.username && user.pass == req.params.pass
+    });
+    if (confirm_user != undefined) {
+        res.json(req.params.username);
+    } else {
+        res.json("Error")
     }
 }
