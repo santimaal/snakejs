@@ -19,7 +19,7 @@ let score = 0
 let speed = 0.980
 let intervalTime = 0
 let interval = 0
-let baddir = 0
+let baddir = 'ArrowLeft'
 let test = 0
 
 
@@ -77,6 +77,7 @@ function startGame() {
     currentSnake = [2, 1, 0]
     currentIndex = 0
     currentSnake.forEach(index => squares[index].classList.add("snake"))
+    squares[2].classList.add('head_right')
     interval = setInterval(moveOutcome, intervalTime)
 }
 
@@ -103,20 +104,19 @@ function moveSnake(squares) {
     currentSnake.unshift(currentSnake[0] + direction)
     // movement ends here  
     eatFruit(squares, tail)
-    console.log(baddir)
     squares[currentSnake[1]].classList.add("snake")
     if (baddir == 'ArrowUp') {
         squares[currentSnake[0]].classList.add("head_down")
         squares[currentSnake[0]].classList.add('head');
-    } else if(baddir == 'ArrowDown') {
+    } else if (baddir == 'ArrowDown') {
         squares[currentSnake[0]].classList.add("head_up")
         squares[currentSnake[0]].classList.add('head');
     }
-    else if(baddir == 'ArrowLeft') {
+    else if (baddir == 'ArrowLeft') {
         squares[currentSnake[0]].classList.add("head_right")
         squares[currentSnake[0]].classList.add('head');
     }
-    else if(baddir == 'ArrowRight') {
+    else if (baddir == 'ArrowRight') {
         squares[currentSnake[0]].classList.add("head_left")
         squares[currentSnake[0]].classList.add('head');
     }
@@ -163,7 +163,7 @@ function eatFruit(squares, tail) {
 function randomFruit(squares) {
     do {
         fruitIndex = Math.floor(Math.random() * squares.length)
-    } while (squares[fruitIndex].classList.contains("snake")  || squares[fruitIndex].classList.contains("head"))
+    } while (squares[fruitIndex].classList.contains("snake") || squares[fruitIndex].classList.contains("head"))
     squares[fruitIndex].style.backgroundImage = "url(fruits/" + fruits[Math.floor(Math.random() * fruits.length)] + ")";
     squares[fruitIndex].classList.add("fruit")
 }
@@ -176,7 +176,7 @@ function endgame() {
     scorers.push({ "score": score, "name": playername })
     playername = ''
     scorersordered = scorers.sort(orderValues("score", "desc"));
-    for (row in scorersordered.slice(0, 4)) {
+    for (let row in scorersordered.slice(0, 4)) {
         writescore += scorersordered[row].name + " : " + scorersordered[row].score + '<br>';
         topscore.innerHTML = writescore;
     }
@@ -215,5 +215,6 @@ function replay() {
     grid.innerHTML = ""
     createBoard()
     startGame()
+    baddir = 'ArrowLeft';
     popup.style.display = "none";
 }
