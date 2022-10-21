@@ -27,6 +27,13 @@ let test = 0
 
 // First function loaded
 document.addEventListener("DOMContentLoaded", function () {
+    if (!localStorage.getItem("token")) { location.href = "../login/form.html" }
+    if (localStorage.getItem("background")) {
+        grid.classList.add("customgrid")
+         grid.style.backgroundImage = "url("+localStorage.getItem("background")+")"
+    } else {
+        grid.classList.add("normalgrid")
+    }
     first.innerHTML = "Press something to start";
     createBoard()
     createNav()
@@ -37,9 +44,7 @@ function topScorer() {
     if (localStorage.getItem("top_scorer")) {
         let top_scorer = JSON.parse(atob(localStorage.getItem("top_scorer")));
         scorers = top_scorer;
-        console.log(top_scorer);
         for (let row in top_scorer.slice(0, 4)) {
-            console.log("a");
             writescore += top_scorer[row].name + " : " + top_scorer[row].score + '<br>';
             topscore.innerHTML = writescore;
         }

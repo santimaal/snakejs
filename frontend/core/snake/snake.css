@@ -7,7 +7,7 @@ nav {
   position: sticky;
   left: 5%;
   height: 90px;
-  background: linear-gradient(45deg, red, blue, lime, rgb(178, 178, 178));
+  background: linear-gradient(45deg, red, rgb(190, 69, 208), rgb(26, 61, 191), rgb(76, 243, 42));
   background-size: 400% 400%;
   position: relative;
   animation: cambiar 10s ease-in-out infinite;
@@ -50,6 +50,14 @@ nav {
   width: 15%;
 }
 
+.customgrid {
+  background-image: '';
+}
+
+.normalgrid {
+  background-image: url(fondo.jpg);
+}
+
 .grid {
   width: 400px;
   height: 300px;
@@ -61,7 +69,6 @@ nav {
   border: 8px inset black;
   border-image: linear-gradient(#e357f3, #0fd7ca) 30;
   /* background-color: ; */
-  background-image: url(fondo.jpg);
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -265,6 +272,80 @@ nav {
     transform: translate(0);
   }
 }
+
+.dropdownmenu {
+  padding-left: 5%;
+}
+
+.dropdownmenu ul,
+.dropdownmenu li {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdownmenu ul {
+  background: gray;
+  list-style: none;
+  width: 100%;
+}
+
+.dropdownmenu li {
+  float: left;
+  position: relative;
+  width: auto;
+}
+
+.dropdownmenu a {
+  background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
+  /* background: #30A6E6; */
+  color: #FFFFFF;
+  display: block;
+  /* font: bold 12px/20px sans-serif; */
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: all .25s ease;
+  -moz-transition: all .25s ease;
+  -ms-transition: all .25s ease;
+  -o-transition: all .25s ease;
+  transition: all .25s ease;
+}
+
+.dropdownmenu li:hover a {
+  background: #000000;
+}
+
+
+#submenu {
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 35px;
+  visibility: hidden;
+  z-index: 1;
+}
+
+li:hover ul#submenu {
+  opacity: 1;
+  top: 40px;
+  /* adjust this as per top nav padding top & bottom comes */
+  visibility: visible;
+}
+
+#submenu li {
+  float: none;
+  width: 100%;
+}
+
+#submenu a:hover {
+  background: #DF4B05;
+}
+
+#submenu a {
+  background-color: #000000;
+}
+
+
 
 @media (min-width: 768px) {
 
