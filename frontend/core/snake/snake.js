@@ -27,10 +27,12 @@ let test = 0
 
 // First function loaded
 document.addEventListener("DOMContentLoaded", function () {
+    settings()
+    localStorage.setItem("settings", JSON.stringify({ block: false, speed: 200 }));
     if (!localStorage.getItem("token")) { location.href = "../login/form.html" }
     if (localStorage.getItem("background")) {
         grid.classList.add("customgrid")
-         grid.style.backgroundImage = "url("+localStorage.getItem("background")+")"
+        grid.style.backgroundImage = "url(" + localStorage.getItem("background") + ")"
     } else {
         grid.classList.add("normalgrid")
     }
@@ -39,6 +41,53 @@ document.addEventListener("DOMContentLoaded", function () {
     createNav()
     topScorer()
 })
+
+function settings() {
+
+    // BLOCKS
+    document.getElementById("blocks").innerHTML = "Blocks: NO"
+    document.getElementById("blocks").addEventListener("click", function () {
+        let lsblock = JSON.parse(localStorage.getItem("settings")).block
+        let ls = JSON.parse(localStorage.getItem("settings"))
+        if (lsblock == true) {
+            ls.block = false;
+            localStorage.setItem("settings", JSON.stringify(ls))
+            document.getElementById("blocks").innerHTML = "Blocks: NO"
+        } else {
+            ls.block = true;
+            localStorage.setItem("settings", JSON.stringify(ls))
+            document.getElementById("blocks").innerHTML = "Blocks: YES"
+        }
+    })
+    // OTHERS
+    document.getElementById("speed").innerHTML = "EASY"
+    document.getElementById("speed").addEventListener("click", function () {
+        try {
+            let ls = JSON.parse(localStorage.getItem("settings"))
+            if (ls.speed == 200) {
+                document.getElementById("speed").innerHTML = "MEDIUM"
+                ls.speed = 150;
+                localStorage.setItem("settings", JSON.stringify(ls))
+            } else if (ls.speed == 150) {
+                document.getElementById("speed").innerHTML = "HARD"
+                ls.speed = 100;
+                localStorage.setItem("settings", JSON.stringify(ls))
+            } else if (ls.speed == 100) {
+                document.getElementById("speed").innerHTML = "EASY"
+                ls.speed = 200;
+                localStorage.setItem("settings", JSON.stringify(ls))
+            } else {
+                document.getElementById("speed").innerHTML = "CRIMINAL"
+                ls.speed = 20;
+                localStorage.setItem("settings", JSON.stringify(ls))
+            }
+        } catch (e) {
+            document.getElementById("speed").innerHTML = "CRIMINAL"
+            localStorage.setItem("settings", JSON.stringify({speed:20}))
+        }
+
+    })
+}
 
 function topScorer() {
     if (localStorage.getItem("top_scorer")) {
@@ -106,7 +155,7 @@ function startGame() {
     //random fruit 
     direction = 1
     scoreDisplay.innerHTML = "Current score: " + 0
-    intervalTime = 200
+    intervalTime = JSON.parse(localStorage.getItem("settings")).speed
     currentSnake = [2, 1, 0]
     currentIndex = 0
     currentSnake.forEach(index => squares[index].classList.add("snake"))
@@ -168,7 +217,9 @@ function checkForHits(squares) {
         (currentSnake[0] % width === width - 1 && direction === 1) ||
         (currentSnake[0] % width === 0 && direction === -1) ||
         (currentSnake[0] - width < 0 && direction === -width) ||
-        squares[currentSnake[0] + direction].classList.contains("snake")
+        squares[currentSnake[0] + direction].classList.contains("snake") ||
+        squares[currentSnake[0] + direction].classList.contains("block")
+
     ) {
         return true
     } else {
@@ -196,9 +247,16 @@ function eatFruit(squares, tail) {
 function randomFruit(squares) {
     do {
         fruitIndex = Math.floor(Math.random() * squares.length)
-    } while (squares[fruitIndex].classList.contains("snake") || squares[fruitIndex].classList.contains("head"))
+        blockIndex = Math.floor(Math.random() * squares.length)
+    } while (squares[fruitIndex].classList.contains("snake") || squares[fruitIndex].classList.contains("head") || squares[blockIndex].classList.contains("snake") || squares[blockIndex].classList.contains("head") || squares[fruitIndex].classList.contains("block"))
     squares[fruitIndex].style.backgroundImage = "url(fruits/" + fruits[Math.floor(Math.random() * fruits.length)] + ")";
     squares[fruitIndex].classList.add("fruit")
+
+    console.log(localStorage.getItem("settings"));
+
+    JSON.parse(localStorage.getItem("settings")).block == true ? squares[blockIndex].classList.add("block") : false;
+    // if (JSON.parse(localStorage.getItem("settings")).block == "yes") {
+    // }
 }
 
 // Finish the game

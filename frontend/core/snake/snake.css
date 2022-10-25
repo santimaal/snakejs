@@ -1,5 +1,9 @@
 body {
-  background-image: url(background.png);
+  background-image: url(./background.png);
+}
+
+.block {
+  background-color: orange;
 }
 
 nav {

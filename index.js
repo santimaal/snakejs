@@ -1,0 +1,1 @@
+location.href = './frontend/core/snake/snake.html'
