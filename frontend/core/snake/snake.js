@@ -12,6 +12,12 @@ let playername = '';
 let writescore = '';
 let scorersordered = '';
 let scorers = []
+let scorersEasy = []
+let scorersMedium = []
+let scorersHard = []
+let scorersOrEasy = document.querySelector(".scoreEasy");
+let scorersOrMedium = document.querySelector(".scoreMedium");
+let scorersOrHard = document.querySelector(".scoreHard");
 let width = 20;
 let currentIndex = 0
 let fruitIndex = 0
@@ -23,7 +29,6 @@ let intervalTime = 0
 let interval = 0
 let baddir = 'ArrowLeft'
 let test = 0
-
 
 // First function loaded
 document.addEventListener("DOMContentLoaded", function () {
@@ -83,20 +88,33 @@ function settings() {
             }
         } catch (e) {
             document.getElementById("speed").innerHTML = "CRIMINAL"
-            localStorage.setItem("settings", JSON.stringify({speed:20}))
+            localStorage.setItem("settings", JSON.stringify({ speed: 20 }))
         }
 
     })
 }
 
 function topScorer() {
-    if (localStorage.getItem("top_scorer")) {
-        let top_scorer = JSON.parse(atob(localStorage.getItem("top_scorer")));
-        scorers = top_scorer;
-        for (let row in top_scorer.slice(0, 4)) {
-            writescore += top_scorer[row].name + " : " + top_scorer[row].score + '<br>';
-            topscore.innerHTML = writescore;
-        }
+
+    // localStorage.getItem("easy") ? scorersEasy = JSON.parse(atob(localStorage.getItem("easy"))) && reloadScore(scorersOrEasy, JSON.parse(atob(localStorage.getItem("easy"))).slice(0, 4)): false;
+    // localStorage.getItem("medium") ? reloadScore(scorersOrMedium, JSON.parse(atob(localStorage.getItem("medium"))).slice(0, 4)) : false;
+    // localStorage.getItem("hard") ? reloadScore(scorersOrHard, JSON.parse(atob(localStorage.getItem("hard"))).slice(0, 4)) : false;
+
+
+    if (localStorage.getItem("easy")) {
+        let scoreE = JSON.parse(atob(localStorage.getItem("easy")));
+        scorersEasy = scoreE;
+        reloadScore(scorersOrEasy, scorersEasy.slice(0, 4))
+    }
+    if (localStorage.getItem("medium")) {
+        let scoreE = JSON.parse(atob(localStorage.getItem("medium")));
+        scorersMedium = scoreE;
+        reloadScore(scorersOrMedium, scorersMedium.slice(0, 4))
+    }
+    if (localStorage.getItem("hard")) {
+        let scoreE = JSON.parse(atob(localStorage.getItem("hard")));
+        scorersHard = scoreE;
+        reloadScore(scorersOrHard, scorersHard.slice(0, 4))
     }
 }
 
@@ -252,8 +270,6 @@ function randomFruit(squares) {
     squares[fruitIndex].style.backgroundImage = "url(fruits/" + fruits[Math.floor(Math.random() * fruits.length)] + ")";
     squares[fruitIndex].classList.add("fruit")
 
-    console.log(localStorage.getItem("settings"));
-
     JSON.parse(localStorage.getItem("settings")).block == true ? squares[blockIndex].classList.add("block") : false;
     // if (JSON.parse(localStorage.getItem("settings")).block == "yes") {
     // }
@@ -262,19 +278,43 @@ function randomFruit(squares) {
 // Finish the game
 function endgame() {
     popup.style.display = "flex"
-    scorers.push({ "score": score, "name": atob(localStorage.getItem("token")) })
-    playername = '';
-    writescore = '';
-    scorersordered = scorers.sort(orderValues("score", "desc"));
-    localStorage.setItem("top_scorer", btoa(JSON.stringify(scorersordered)))
-    for (let row in scorersordered.slice(0, 4)) {
-        writescore += scorersordered[row].name + " : " + scorersordered[row].score + '<br>';
-        topscore.innerHTML = writescore;
+    if (JSON.parse(localStorage.getItem('settings')).speed == 200) {
+        scoreType(scorersEasy, scorersOrEasy, 'easy')
+    } else if (JSON.parse(localStorage.getItem('settings')).speed == 150) {
+        scoreType(scorersMedium, scorersOrMedium, 'medium')
+    } else {
+        scoreType(scorersHard, scorersOrHard, 'hard')
     }
+    // scorers.push({ "score": score, "name": atob(localStorage.getItem("token")) })
+    // playername = '';
+    // writescore = '';
+    // scorersordered = scorers.sort(orderValues("score", "desc"));
+    // localStorage.setItem("top_scorer", btoa(JSON.stringify(scorersordered)))
+    // for (let row in scorersordered.slice(0, 4)) {
+    //     writescore += scorersordered[row].name + " : " + scorersordered[row].score + '<br>';
+    //     topscore.innerHTML = writescore;
+    // }
     playAgain.addEventListener("click", replay);
     score = 0;
     baddir = 0;
     writescore = ''
+}
+
+
+function scoreType(scoretype, reload, LStype) {
+    scoretype.push({ "score": score, "name": atob(localStorage.getItem("token")) });
+    scorersordered = scoretype.sort(orderValues("score", "desc"));
+    localStorage.setItem(LStype, btoa(JSON.stringify(scorersordered)))
+    reloadScore(reload, scorersordered)
+}
+
+
+function reloadScore(reload, orderedvalue) {
+    writescore = '';
+    for (let row in orderedvalue.slice(0, 4)) {
+        writescore += orderedvalue[row].name + " : " + orderedvalue[row].score + '<br>';
+        reload.innerHTML = writescore;
+    }
 }
 
 // To order the top score
