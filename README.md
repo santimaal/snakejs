@@ -9,10 +9,10 @@ Dillin
 
 Santi's snake uses a open source projects to work properly:
 
-- [node.js] - for the backend
-- [jQuery] - for the login/register
+- [node.js](https://nodejs.org/) - for the backend
+- [jQuery](http://jquery.com) - for the login/register
 
-And of course Santi's snake itself is open source with a [public repository][snake]
+And of course Santi's snake itself is open source with a [public repository](https://github.com/santimaal/snakejs)
  on GitHub.
 
 ## Installation
@@ -29,7 +29,3 @@ npm run dev
 > Note: if the backend isn't running, u can't do the login/register
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-    [node.js]: <http://nodejs.org>
-    [jQuery]: <http://jquery.com>
-    [snake]: <https://github.com/santimaal/snakejs>
