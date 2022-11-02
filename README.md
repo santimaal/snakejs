@@ -4,7 +4,7 @@
 - Open the index.html
 - Login/Register
 - Enjoy
-Dillin
+
 ## Tech
 
 Santi's snake uses a open source projects to work properly:
