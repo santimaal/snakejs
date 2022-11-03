@@ -17,7 +17,7 @@ And of course Santi's snake itself is open source with a [public repository](htt
 
 ## Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
+Santi's snake requires [Node.js](https://nodejs.org/) v10+ to run.
 
 Install the dependencies and devDependencies and start the server.
 
