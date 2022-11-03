@@ -64,7 +64,8 @@ function settings() {
             document.getElementById("blocks").innerHTML = "Blocks: YES"
         }
     })
-    // OTHERS
+
+    // DIFFICULTY
     document.getElementById("speed").innerHTML = "EASY"
     document.getElementById("speed").addEventListener("click", function () {
         try {
@@ -92,6 +93,24 @@ function settings() {
         }
 
     })
+
+    // SCORE
+    async function random() {
+        const random = await fetch("https://randomuser.me/api/");
+        return random.json()
+    }
+
+    if (!localStorage.getItem('easy')) {
+        localStorage.setItem("easy", "W3sic2NvcmUiOjI4LCJuYW1lIjoiTGF1cmVuIn0seyJzY29yZSI6MjAsIm5hbWUiOiJSYXVsIn0seyJzY29yZSI6MTYsIm5hbWUiOiJabGF0YSJ9LHsic2NvcmUiOjAsIm5hbWUiOiJzYW50aWgifV0=")
+    }
+
+    if (!localStorage.getItem('medium')) {
+        localStorage.setItem("medium", "W3sic2NvcmUiOjIxLCJuYW1lIjoiSGVyYmVydCJ9LHsic2NvcmUiOjEzLCJuYW1lIjoiRGFyc2gifSx7InNjb3JlIjoxMywibmFtZSI6IkNhbmRlbOFyaWEifSx7InNjb3JlIjowLCJuYW1lIjoic2FudGloIn1d")
+
+    }
+    if (!localStorage.getItem('hard')) {
+        localStorage.setItem("hard", "W3sic2NvcmUiOjI5LCJuYW1lIjoiTWlrYWVsIn0seyJzY29yZSI6MTgsIm5hbWUiOiJFbGl6YWJldGgifSx7InNjb3JlIjoxNiwibmFtZSI6Ik1hbHVzaGEifSx7InNjb3JlIjo5LCJuYW1lIjoiQWxtZXJpbmRhIn1d")
+    }
 }
 
 function topScorer() {

@@ -29,6 +29,7 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 });
 
 $('.tab a').on('click', function (e) {
+    $('.error_password').html('');
 
     e.preventDefault();
 
@@ -73,9 +74,12 @@ $('.login').on('click', function (e) {
 function checkValueRegister() {
     let pass = document.getElementsByClassName('pass');
     let usr = document.getElementsByClassName('usr');
-    if (!pass[0].value.length >= 5 && !pass[1].value.length >= 5) {
+    $('.error_usr').html('');
+    if (usr[0].value.length < 5) {
+        $('.error_usr').html('+4 caracteres');
         return false;
-    } else if (usr[0].value.length < 4) {
+    } else if (pass[0].value.length < 5 || pass[1].value.length < 5) {
+        $('.error_password').html('+4 caracteres');
         return false;
     }
 
